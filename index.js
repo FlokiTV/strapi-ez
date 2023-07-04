@@ -1,14 +1,27 @@
 const qs = require("qs");
 
-class StrapiQuery {
+export class StrapiQuery {
   constructor() {
     this.tmpFilter = {}; //store the condition
-    this.tmpObject = {};
-    this.tmpKey = {};
+    this.tmpObject = {}; //store the object
+    this.tmpKey = {}; //store the key
+    this.base = ""; //store the base url
     this.query = {
       filters: {},
-    };
+    }; //store the query
   }
+
+  /**
+   * Set the base endpoint for the query.
+   *
+   * @param {string} endpointPath The base URL to be set .
+   * @returns {this}
+   */
+  endpoint(endpointPath) {
+    this.endpoint = endpointPath;
+    return this;
+  }
+
   /**
    * Queries can accept a `fields` parameter to select only some fields. By default, only the following types of fields are returned:
    *
@@ -74,16 +87,20 @@ class StrapiQuery {
     this.query.sort = fields;
     return this;
   }
+
   #condition(key = "$and", path) {
     if (!this.query.filters[key]) {
       this.query.filters[key] = [];
     }
     this.#clearFilters();
+
     this.tmpFilter = this.query.filters[key];
     let last = this.tmpObject;
     for (let index = 0; index < path.length; index++) {
       const element = path[index];
+
       last[element] = {};
+
       last = last[element];
     }
     this.tmpKey = last;
@@ -120,6 +137,7 @@ class StrapiQuery {
     if (!this.query.pagination) {
       this.query.pagination = {};
     }
+
     this.query.pagination = {
       page,
       pageSize,
@@ -139,6 +157,7 @@ class StrapiQuery {
     if (!this.query.pagination) {
       this.query.pagination = {};
     }
+
     this.query.pagination = {
       start,
       limit,
@@ -146,8 +165,10 @@ class StrapiQuery {
     };
     return this;
   }
+
   #filter(key = "$eq", fields) {
     this.tmpKey[key] = fields;
+
     this.tmpFilter.push(this.tmpObject);
     this.#clearFilters();
     return this;
@@ -343,9 +364,10 @@ class StrapiQuery {
    * @returns {string}
    */
   get() {
-    return qs.stringify(this.query, {
+    const queryString = qs.stringify(this.query, {
       encodeValuesOnly: true, // prettify URL
     });
+    return `${this.endpoint}?${queryString}`;
   }
 }
 
