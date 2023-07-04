@@ -1,6 +1,6 @@
 const qs = require("qs");
 
-export class StrapiEz {
+class StrapiEz {
   constructor() {
     this.tmpFilter = {}; //store the condition
     this.tmpObject = {}; //store the object
