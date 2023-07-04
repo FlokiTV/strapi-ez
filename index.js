@@ -1,6 +1,6 @@
 const qs = require("qs");
 
-export class StrapiQuery {
+export class StrapiEz {
   constructor() {
     this.tmpFilter = {}; //store the condition
     this.tmpObject = {}; //store the object
@@ -371,4 +371,4 @@ export class StrapiQuery {
   }
 }
 
-module.exports = StrapiQuery;
+module.exports = StrapiEz;
