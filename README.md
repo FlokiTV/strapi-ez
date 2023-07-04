@@ -10,7 +10,8 @@ const $axios = axios.create({
   baseURL,
 });
 
-let q = new StrapiQuery()
+let queryString = new StrapiQuery()
+  .endpoint('api/offers')
   .state("live")
   .fields("title")
   .populate("categories")
@@ -26,9 +27,10 @@ let q = new StrapiQuery()
   // render query string
   .get();
 
-console.log(q);
+console.log(queryString);
+// api/offers?filters[$and][0][categories][slug][$in][0]=teste&filters[$and][0][categories][slug][$in][1]=alimentacao&filters[$or][0][title][$endsWith][0]=mia&publicationState=live&fields[0]=title&populate[0]=categories&sort[0]=title%3Adesc&pagination[page]=1&pagination[pageSize]=25&pagination[withCount]=true
 
-$axios.get(`api/offers?${q}`).then((response) => {
+$axios.get(q).then((response) => {
   console.log(response.data.data);
 });
 ```
