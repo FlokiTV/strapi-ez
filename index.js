@@ -18,7 +18,7 @@ class StrapiEz {
    * @returns {this}
    */
   endpoint(endpointPath) {
-    this.endpoint = endpointPath;
+    this.base = endpointPath;
     return this;
   }
 
@@ -367,7 +367,7 @@ class StrapiEz {
     const queryString = qs.stringify(this.query, {
       encodeValuesOnly: true, // prettify URL
     });
-    return `${this.endpoint}?${queryString}`;
+    return `${this.base}?${queryString}`;
   }
 }
 
