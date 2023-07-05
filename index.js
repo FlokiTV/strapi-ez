@@ -5,22 +5,35 @@ class StrapiEz {
     this.tmpFilter = {}; //store the condition
     this.tmpObject = {}; //store the object
     this.tmpKey = {}; //store the key
-    this.base = ""; //store the base url
+    this.endpointPath = ""; //store the endpoint path
+    this.baseUrl = null; //store the base url
     this.query = {
       filters: {},
     }; //store the query
   }
 
   /**
-   * Set the base endpoint for the query.
+   * Set the base url for the query.
+   * In case of using base url, the endpoint will be needed to the base url.
    *
    * @param {string} endpointPath The base URL to be set .
    * @returns {this}
    */
-  endpoint(endpointPath) {
-    this.endpoint = endpointPath;
+  baseUrl(baseUrl) {
+    this.baseUrl = baseUrl;
     return this;
   }
+
+    /**
+   * Set the base endpoint for the query.
+   *
+   * @param {string} endpointPath The endpoint to be set .
+   * @returns {this}
+   */
+    endpoint(endpointPath) {
+      this.endpointPath = endpointPath;
+      return this;
+    }
 
   /**
    * Queries can accept a `fields` parameter to select only some fields. By default, only the following types of fields are returned:
@@ -357,6 +370,8 @@ class StrapiEz {
     this.tmpKey = {};
     this.tmpFilter = {};
     this.tmpObject = {};
+    this.endpointPath = "";
+    this.baseUrl = null;
   }
   /**
    * Render query string
@@ -367,6 +382,9 @@ class StrapiEz {
     const queryString = qs.stringify(this.query, {
       encodeValuesOnly: true, // prettify URL
     });
+
+    if(baseUrl) return `${this.baseUrl}/${this.endpoint}?${queryString}`;
+
     return `${this.endpoint}?${queryString}`;
   }
 }
