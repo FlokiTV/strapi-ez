@@ -383,7 +383,7 @@ class StrapiEz {
       encodeValuesOnly: true, // prettify URL
     });
 
-    if(baseUrl) return `${this.baseUrl}/${this.endpoint}?${queryString}`;
+    if(this.baseUrl) return `${this.baseUrl}/${this.endpoint}?${queryString}`;
 
     return `${this.endpoint}?${queryString}`;
   }
