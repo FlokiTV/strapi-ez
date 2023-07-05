@@ -11,16 +11,16 @@ To filter the results returned by the API, you may use the where method. The whe
 
 ## Example
 ```js
-const { default: axios } = require("axios");
+const { axios } = require("axios");
 const StrapiEz = require("./strapi");
 
-const baseURL = "http://127.0.0.1:1337/";
-const $axios = axios.create({
-  baseURL,
-});
+const baseURL = "https://127.0.0.1:1337";
+ 
 
 // Create a new instance of the StrapiEz class
 let queryString = new StrapiEz()
+  // Set the base URL to "
+  .baseURL(baseURL)
   // Set the endpoint to "api/offers"
   .endpoint('api/offers') 
   // Filter by offers in the "live" state
@@ -46,10 +46,10 @@ let queryString = new StrapiEz()
   .get();
 
 console.log(queryString);
-// api/offers?filters[$and][0][categories][slug][$in][0]=teste&filters[$and][0][categories][slug][$in][1]=alimentacao&filters[$or][0][title][$endsWith][0]=mia&publicationState=live&fields[0]=title&populate[0]=categories&sort[0]=title%3Adesc&pagination[page]=1&pagination[pageSize]=25&pagination[withCount]=true
+// https://127.0.0.1:1337/api/offers?filters[$and][0][categories][slug][$in][0]=teste&filters[$and][0][categories][slug][$in][1]=alimentacao&filters[$or][0][title][$endsWith][0]=mia&publicationState=live&fields[0]=title&populate[0]=categories&sort[0]=title%3Adesc&pagination[page]=1&pagination[pageSize]=25&pagination[withCount]=true
 
 // Make a GET request to the API with the constructed query string
-$axios.get(queryString).then((response) => {
+axios.get(queryString).then((response) => {
   console.log(response.data.data);
 });
 
