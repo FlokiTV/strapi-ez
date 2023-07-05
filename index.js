@@ -24,16 +24,16 @@ class StrapiEz {
     return this;
   }
 
-    /**
+  /**
    * Set the base endpoint for the query.
    *
    * @param {string} endpointPath The endpoint to be set .
    * @returns {this}
    */
-    endpoint(endpointPath) {
-      this.endpointPath = endpointPath;
-      return this;
-    }
+  endpoint(endpointPath) {
+    this.endpointPath = endpointPath;
+    return this;
+  }
 
   /**
    * Queries can accept a `fields` parameter to select only some fields. By default, only the following types of fields are returned:
@@ -383,7 +383,7 @@ class StrapiEz {
       encodeValuesOnly: true, // prettify URL
     });
 
-    if(this.baseUrl) return `${this.baseUrl}/${this.endpoint}?${queryString}`;
+    if (this.baseUrl) return `${this.baseUrl}/${this.endpoint}?${queryString}`;
 
     return `${this.endpoint}?${queryString}`;
   }
