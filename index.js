@@ -6,7 +6,7 @@ class StrapiEz {
     this.tmpObject = {}; //store the object
     this.tmpKey = {}; //store the key
     this.endpointPath = ""; //store the endpoint path
-    this.baseUrl = null; //store the base url
+    this.baseURL = null; //store the base url
     this.query = {
       filters: {},
     }; //store the query
@@ -19,8 +19,8 @@ class StrapiEz {
    * @param {string} endpointPath The base URL to be set .
    * @returns {this}
    */
-  baseUrl(baseUrl) {
-    this.baseUrl = baseUrl;
+  baseURL(baseURL) {
+    this.baseURL = baseURL;
     return this;
   }
 
@@ -371,7 +371,7 @@ class StrapiEz {
     this.tmpFilter = {};
     this.tmpObject = {};
     this.endpointPath = "";
-    this.baseUrl = null;
+    this.baseURL = null;
   }
   /**
    * Render query string
@@ -383,7 +383,7 @@ class StrapiEz {
       encodeValuesOnly: true, // prettify URL
     });
 
-    if (this.baseUrl) return `${this.baseUrl}/${this.endpoint}?${queryString}`;
+    if (this.baseURL) return `${this.baseURL}/${this.endpoint}?${queryString}`;
 
     return `${this.endpoint}?${queryString}`;
   }
