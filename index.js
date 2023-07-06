@@ -65,6 +65,7 @@ class StrapiEz {
    */
   populate(...fields) {
     this.query.populate = fields;
+    if (fields.length === 1) this.query.populate = fields[0];
     return this;
   }
   /**
