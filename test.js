@@ -1,10 +1,13 @@
 const test = require("node:test");
 const StrapiEz = require("./index.js");
-const baseURL = "http://54.162.104.139:1337/";
+const baseURL = "http://54.162.104.139:1337";
 
+const query = new StrapiEz();
 test("test", async (t) => {
-  const query = new StrapiEz()
+  
+  query
     .baseURL(baseURL)
+    .endpoint("categories")
     .page(1, 1)
     .fields("updatedAt")
     .sort("updatedAt:desc");

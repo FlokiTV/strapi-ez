@@ -1,16 +1,15 @@
 const qs = require("qs");
 
 class StrapiEz {
+  #baseURL;
+  #endPoint;
   constructor() {
     this.tmpFilter = {}; //store the condition
     this.tmpObject = {}; //store the object
     this.tmpKey = {}; //store the key
-    this.endpointPath = ""; //store the endpoint path
-    this.baseURL = null; //store the base url
     this.query = {
       filters: {},
     }; //store the query
-    return this;
   }
 
   /**
@@ -21,7 +20,7 @@ class StrapiEz {
    * @returns {this}
    */
   baseURL(baseURL) {
-    this.baseURL = baseURL;
+    this.#baseURL = baseURL;
     return this;
   }
 
@@ -32,7 +31,7 @@ class StrapiEz {
    * @returns {this}
    */
   endpoint(endpointPath) {
-    this.endpointPath = endpointPath;
+    this.#endPoint = endpointPath;
     return this;
   }
 
@@ -371,7 +370,7 @@ class StrapiEz {
     this.tmpKey = {};
     this.tmpFilter = {};
     this.tmpObject = {};
-    this.endpointPath = "";
+    this.#endPoint = "";
     this.baseURL = null;
   }
   /**
@@ -383,11 +382,11 @@ class StrapiEz {
     const queryString = qs.stringify(this.query, {
       encodeValuesOnly: true, // prettify URL
     });
+    if (!this.#endPoint) return queryString;
+    if (typeof this.#baseURL != "undefined")
+      return `${this.#baseURL}/${this.#endPoint}?${queryString}`;
 
-    if (this.baseURL)
-      return `${this.baseURL}/${this.endpointPath}?${queryString}`;
-
-    return `${this.endpointPath}?${queryString}`;
+    return `${this.#endPoint}?${queryString}`;
   }
 }
 
