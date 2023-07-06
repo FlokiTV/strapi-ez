@@ -10,5 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "qs": "^6.11.2"
+  },
+  "devDependencies": {
+    "axios": "^1.4.0"
   }
 }

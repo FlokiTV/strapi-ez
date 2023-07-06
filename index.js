@@ -384,7 +384,9 @@ class StrapiEz {
     });
     if (!this.#endPoint) return queryString;
     if (typeof this.#baseURL != "undefined")
-      return `${this.#baseURL}/${this.#endPoint}?${queryString}`;
+      return `${this.#baseURL}${!this.#baseURL.includes("api") ? "/api" : ""}/${
+        this.#endPoint
+      }?${queryString}`;
 
     return `${this.#endPoint}?${queryString}`;
   }
