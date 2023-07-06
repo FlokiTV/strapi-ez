@@ -10,6 +10,7 @@ class StrapiEz {
     this.query = {
       filters: {},
     }; //store the query
+    return this;
   }
 
   /**
@@ -383,7 +384,8 @@ class StrapiEz {
       encodeValuesOnly: true, // prettify URL
     });
 
-    if (this.baseURL) return `${this.baseURL}/${this.endpointPath}?${queryString}`;
+    if (this.baseURL)
+      return `${this.baseURL}/${this.endpointPath}?${queryString}`;
 
     return `${this.endpointPath}?${queryString}`;
   }
