@@ -371,8 +371,6 @@ class StrapiEz {
     this.tmpKey = {};
     this.tmpFilter = {};
     this.tmpObject = {};
-    this.#endPoint = "";
-    this.baseURL = null;
   }
   /**
    * Render query string
@@ -383,7 +381,7 @@ class StrapiEz {
     const queryString = qs.stringify(this.query, {
       encodeValuesOnly: true, // prettify URL
     });
-    if (!this.#endPoint) return queryString;
+    if (typeof this.#endPoint != "undefined") return queryString;
     if (typeof this.#baseURL != "undefined")
       return `${this.#baseURL}${!this.#baseURL.includes("api") ? "/api" : ""}/${
         this.#endPoint
