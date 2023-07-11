@@ -382,7 +382,7 @@ class StrapiEz {
       encodeValuesOnly: true, // prettify URL
     });
     if (typeof this.#endPoint === "undefined") return queryString;
-    if (typeof this.#baseURL != "undefined")
+    if (typeof this.#baseURL !== "undefined")
       return `${this.#baseURL}${!this.#baseURL.includes("api") ? "/api" : ""}/${
         this.#endPoint
       }?${queryString}`;
