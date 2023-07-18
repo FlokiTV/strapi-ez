@@ -1,8 +1,8 @@
 const qs = require("qs");
 
 class StrapiEz {
-  #baseURL;
-  #endPoint;
+  #baseURL; //store the Base URL
+  #endPoint; //store the endpoint
   constructor() {
     this.tmpFilter = {}; //store the condition
     this.tmpObject = {}; //store the object
@@ -57,9 +57,10 @@ class StrapiEz {
     this.query.fields = fields;
     return this;
   }
+
   /**
    * Queries can accept a `populate` parameter to populate various field types
-   *
+   * To populate children entries, populate from parent first.
    * @param  {...string} fields
    * @returns {this}
    */
@@ -68,6 +69,7 @@ class StrapiEz {
     if (fields.length === 1) this.query.populate = fields[0];
     return this;
   }
+
   /**
    * Queries can accept a `publicationState` parameter to fetch entries based on their publication state:
    *
@@ -82,14 +84,13 @@ class StrapiEz {
     this.query.publicationState = publicationState;
     return this;
   }
+
   /**
    * Queries can accept a sort parameter that allows sorting on one or multiple fields.
    * The sorting order can be defined with:
    *
    * `:asc` for ascending order (default order, can be omitted)
-   *
    * or
-   *
    * `:desc` for descending order.
    *
    * example: `title:desc`
@@ -121,6 +122,7 @@ class StrapiEz {
 
     return this;
   }
+
   /**
    * Joins the filters in an "and" expression
    *
@@ -130,6 +132,7 @@ class StrapiEz {
   and(...path) {
     return this.#condition("$and", path);
   }
+
   /**
    * Joins the filters in an "or" expression
    *
@@ -139,6 +142,7 @@ class StrapiEz {
   or(...path) {
     return this.#condition("$or", path);
   }
+
   /**
    * To paginate results by page, use the following parameters:
    *
@@ -159,6 +163,7 @@ class StrapiEz {
     };
     return this;
   }
+
   /**
    * To paginate results by offset, use the following parameters:
    *
@@ -187,6 +192,7 @@ class StrapiEz {
     this.#clearFilters();
     return this;
   }
+
   /**
    * Equal
    *
@@ -196,6 +202,7 @@ class StrapiEz {
   eq(...fields) {
     return this.#filter("$eq", fields);
   }
+
   /**
    * Equal (case-insensitive)
    *
@@ -205,6 +212,7 @@ class StrapiEz {
   eqi(...fields) {
     return this.#filter("$eqi", fields);
   }
+
   /**
    * Not equal
    *
@@ -214,6 +222,7 @@ class StrapiEz {
   ne(...fields) {
     return this.#filter("$ne", fields);
   }
+
   /**
    * Less than
    *
@@ -223,6 +232,7 @@ class StrapiEz {
   lt(...fields) {
     return this.#filter("$lt", fields);
   }
+
   /**
    * Less than or equal to
    *
@@ -232,6 +242,7 @@ class StrapiEz {
   lte(...fields) {
     return this.#filter("$lte", fields);
   }
+
   /**
    * Greater than
    *
@@ -241,6 +252,7 @@ class StrapiEz {
   gt(...fields) {
     return this.#filter("$gt", fields);
   }
+
   /**
    * Greater than or equal to
    *
@@ -250,6 +262,7 @@ class StrapiEz {
   gte(...fields) {
     return this.#filter("$gte", fields);
   }
+
   /**
    * Included in fields
    *
@@ -259,6 +272,7 @@ class StrapiEz {
   in(...fields) {
     return this.#filter("$in", fields);
   }
+
   /**
    * Not included in fields
    *
@@ -268,6 +282,7 @@ class StrapiEz {
   notIn(...fields) {
     return this.#filter("$notIn", fields);
   }
+
   /**
    * Contains
    *
@@ -277,6 +292,7 @@ class StrapiEz {
   contains(...fields) {
     return this.#filter("$contains", fields);
   }
+
   /**
    * Does not contain
    *
@@ -286,6 +302,7 @@ class StrapiEz {
   notContains(...fields) {
     return this.#filter("$notContains", fields);
   }
+
   /**
    * Contains (case-insensitive)
    *
@@ -295,6 +312,7 @@ class StrapiEz {
   containsi(...fields) {
     return this.#filter("$containsi", fields);
   }
+
   /**
    * Does not contain (case-insensitive)
    *
@@ -304,6 +322,7 @@ class StrapiEz {
   notContainsi(...fields) {
     return this.#filter("$notContainsi", fields);
   }
+
   /**
    * Is null
    *
@@ -313,6 +332,7 @@ class StrapiEz {
   null(...fields) {
     return this.#filter("$null", fields);
   }
+
   /**
    * Is not null
    *
@@ -322,6 +342,7 @@ class StrapiEz {
   notNull(...fields) {
     return this.#filter("$notNull", fields);
   }
+
   /**
    * Is between
    *
@@ -331,6 +352,7 @@ class StrapiEz {
   between(...fields) {
     return this.#filter("$between", fields);
   }
+
   /**
    * Starts with
    *
@@ -340,6 +362,7 @@ class StrapiEz {
   startsWith(...fields) {
     return this.#filter("$startsWith", fields);
   }
+
   /**
    * Starts with (case-insensitive)
    *
@@ -349,6 +372,7 @@ class StrapiEz {
   startsWithi(...fields) {
     return this.#filter("$startsWithi", fields);
   }
+
   /**
    * Ends with
    *
@@ -358,6 +382,7 @@ class StrapiEz {
   endsWith(...fields) {
     return this.#filter("$endsWith", fields);
   }
+
   /**
    * Ends with (case-insensitive)
    *
@@ -367,13 +392,15 @@ class StrapiEz {
   endsWithi(...fields) {
     return this.#filter("$endsWithi", fields);
   }
+
   #clearFilters() {
     this.tmpKey = {};
     this.tmpFilter = {};
     this.tmpObject = {};
   }
+
   /**
-   * Render query string
+   * Get query string
    *
    * @returns {string}
    */
@@ -381,13 +408,13 @@ class StrapiEz {
     const queryString = qs.stringify(this.query, {
       encodeValuesOnly: true, // prettify URL
     });
-    if (typeof this.#endPoint === "undefined") return queryString;
+    if (typeof this.#endPoint === "undefined") return queryString; // if endpoint is not set, return only query string.To use base url, endpoint must be set.
     if (typeof this.#baseURL !== "undefined")
       return `${this.#baseURL}${!this.#baseURL.includes("api") ? "/api" : ""}/${
         this.#endPoint
-      }?${queryString}`;
+      }?${queryString}`; // Return base url + endpoint + query string.(full URL)
 
-    return `${this.#endPoint}?${queryString}`;
+    return `${this.#endPoint}?${queryString}`; // Return endpoint + query string.(full endpoint)
   }
 }
 
