@@ -22,25 +22,23 @@ let queryString = new StrapiEz()
   // Set the base URL to "
   .baseURL(baseURL)
   // Set the endpoint to "api/offers"
-  .endpoint('api/offers') 
+  .endpoint('api/offers')
   // Filter by offers in the "live" state
-  .state("live") 
+  .state("live")
   // Select only the "title" field
-  .fields("title") 
+  .fields("title")
   // Populate the "categories" field
-  .populate("categories")
+  .populate("categories", "categories.Icon")
   // Sort the results by the "title" field in descending order
   .sort("title:desc")
   // Set the page to the first page with 25 items per page
   .page(1, 25)
 
   // Add an "AND" condition for the "categories.title" field, checking for values "food" or "toys"
-  .and("categories", "slug")
-    .in("food", "toys") 
+  .and("categories", "slug").in("food", "toys") 
 
   // Add an "OR" condition for the "title" field, checking if it ends with "mia"
-  .or("title") 
-    .endsWith("mia")
+  .or("title").endsWith("mia")
 
   // Get the final query string
   .get();
@@ -52,5 +50,7 @@ console.log(queryString);
 axios.get(queryString).then((response) => {
   console.log(response.data.data);
 });
+
+```
 
 ```
